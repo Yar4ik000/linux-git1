@@ -1,1 +1,1 @@
-The [greetings.py](greetings file) added!
+The [greetings file](greetings.py) added!
