@@ -16,17 +16,24 @@ do
 	min_date=$(echo [$min_date, $page_min] | jq 'if .[0] < .[1] then .[0] else .[1] end')
 done
 min_date=$(echo $min_date | jq 'todate')
-number=0
+number=-1
 for i in 1 2 3 4
 do 
+	if [[ ( -z "$number" ) || ( $number == -1 ) ]];
+	then
+		number=$(curl -s -H "$H2" --url "https://api.github.com/repos/datamove/linux-git2/pulls?state=all&per_page=100&page=$i" | jq '.[] | select(.created_at=='$min_date') | .number')
+	fi
 	merged=$(curl -s -H "$H2" --url "https://api.github.com/repos/datamove/linux-git2/pulls?state=all&per_page=100&page=$i" | jq '.[] | select(.created_at=='$min_date') | if .merged_at then 1 else 0 end')
 	if [[ $merged == 1 ]];
 	then 
-		number=$(curl -s -H "$H2" --url "https://api.github.com/repos/datamove/linux-git2/pulls?state=all&per_page=100&page=$i" | jq '.[] | select(.created_at=='$min_date') | .number')
 		break
 	fi
 done
 
+if [[ -z "$merged" ]];
+then 
+	merged=0
+fi
 echo EARLIEST $number
 echo MERGED $merged
 
