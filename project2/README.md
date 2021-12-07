@@ -1,2 +1,2 @@
 This project have regression ML models(gradient boosting and random forest) which work with csv files. Github workflow automatically build docker container and push it to dockerhub repo yar4ik000/ensembles. 
-You should only pull this docker from dockerhub and run docker image. After this you can see some information in console, including localhost adress of server with logic of interactions with ML models. Go to seen URL and enjoy!
+You should only pull this docker from dockerhub and run docker image. After this you can see some information in console, including localhost adress of server with logic of interactions with ML models(teaching models, predicting, and other things). Go to seen URL and enjoy!
